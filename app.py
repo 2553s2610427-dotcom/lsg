@@ -17,7 +17,7 @@
 
     .container {
       background: white;
-      padding: 40px;
+      padding: 40;
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
