@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>점심 추천기</title>
+  <meta charset="UTF-8">
+  <title>점심 추천</title>
 
   <style>
     body {
-      font-family: sans-serif;
-      background: #f5f5f5;
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      background: #f4f4f4;
+      font-family: sans-serif;
     }
 
-    .card {
+    .container {
       background: white;
       padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       text-align: center;
-      width: 320px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     h1 {
@@ -29,61 +28,55 @@
     }
 
     #menu {
-      font-size: 28px;
-      font-weight: bold;
-      margin: 30px 0;
-      color: #ff5722;
-      min-height: 40px;
+      font-size: 30px;
+      color: tomato;
+      margin: 20px 0;
     }
 
     button {
+      padding: 12px 20px;
       border: none;
-      background: #ff5722;
-      color: white;
-      padding: 14px 24px;
       border-radius: 10px;
+      background: tomato;
+      color: white;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.2s;
     }
 
     button:hover {
-      background: #e64a19;
-      transform: scale(1.05);
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>🍱 오늘 점심 추천</h1>
+  <div class="container">
+    <h1>🍱 오늘 점심</h1>
 
-    <div id="menu">버튼 눌러봐</div>
+    <div id="menu">추천 받기</div>
 
-    <button onclick="pickLunch()">
-      추천 받기
+    <button onclick="recommendMenu()">
+      추천하기
     </button>
   </div>
 
   <script>
-    const lunches = [
+    const menus = [
       "김치찌개",
-      "제육볶음",
       "돈까스",
-      "국밥",
       "햄버거",
       "초밥",
-      "쌀국수",
+      "제육볶음",
       "마라탕",
       "비빔밥",
-      "치킨"
+      "국밥"
     ];
 
-    function pickLunch() {
-      const random = Math.floor(Math.random() * lunches.length);
+    function recommendMenu() {
+      const random = Math.floor(Math.random() * menus.length);
 
       document.getElementById("menu").innerText =
-        lunches[random];
+        menus[random];
     }
   </script>
 
