@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      height: 100;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,29 +17,29 @@
 
     .container {
       background: white;
-      padding: 40;
-      border-radius: 20;
+      padding: 40px;
+      border-radius: 20px;
       text-align: center;
-      box-shadow: 0 4 10 rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     h1 {
-      margin-bottom: 20;
+      margin-bottom: 20px;
     }
 
     #menu {
-      font-size: 30;
+      font-size: 30px;
       color: tomato;
-      margin: 20 0;
+      margin: 20px 0;
     }
 
     button {
-      padding: 12 20;
+      padding: 12px 20px;
       border: none;
-      border-radius: 10;
+      border-radius: 10px;
       background: tomato;
       color: white;
-      font-size: 16;
+      font-size: 16px;
       cursor: pointer;
     }
 
