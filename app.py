@@ -24,22 +24,22 @@
     }
 
     h1 {
-      margin-bottom: 20px;
+      margin-bottom: 20;
     }
 
     #menu {
-      font-size: 30px;
+      font-size: 30;
       color: tomato;
-      margin: 20px 0;
+      margin: 20 0;
     }
 
     button {
-      padding: 12px 20px;
+      padding: 12 20;
       border: none;
-      border-radius: 10px;
+      border-radius: 10;
       background: tomato;
       color: white;
-      font-size: 16px;
+      font-size: 16;
       cursor: pointer;
     }
 
