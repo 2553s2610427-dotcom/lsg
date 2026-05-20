@@ -18,9 +18,9 @@
     .container {
       background: white;
       padding: 40;
-      border-radius: 20px;
+      border-radius: 20;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4 10 rgba(0,0,0,0.1);
     }
 
     h1 {
