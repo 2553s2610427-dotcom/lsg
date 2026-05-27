@@ -116,10 +116,12 @@ if user_input:
                 "content": assistant_reply
             })
 
-        except Exception as e:
-            error_message = f"""
-❌ 오류가 발생했습니다.
+```python
+except Exception as e:
+    error_message = (
+        "❌ 오류가 발생했습니다.\n\n"
+        f"에러 내용:\n{str(e)}\n\n"
+        "잠시 후 다시 시도해주세요."
+    )
 
-에러 내용:
-```bash
-{e}
+    message_placeholder.error(error_message)
