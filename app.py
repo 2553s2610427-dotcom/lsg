@@ -1,5 +1,5 @@
 import streamlit as st
-from google import genai
+from google import gemini
 from google.genai import types
 
 # 페이지 설정
