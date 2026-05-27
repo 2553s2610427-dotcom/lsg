@@ -1,30 +1,30 @@
 import streamlit as st
-from google import gemini
-from google.genai import types
+import google.generativeai as genai
 
 # 페이지 설정
 st.set_page_config(
     page_title="연애상담 챗봇",
-    page_icon="💌",
+    page_icon="💌"
 )
 
 st.title("💌 연애상담 챗봇")
-st.caption("Gemini 2.5 Flash-Lite 기반")
+st.caption("Gemini 2.5 Flash Lite 기반")
 
-# API 키 불러오기
+# API KEY 불러오기
 try:
     api_key = st.secrets["GEMINI_API_KEY"]
+    genai.configure(api_key=api_key)
 
 except Exception:
-    st.error("❌ GEMINI_API_KEY가 secrets.toml에 설정되지 않았습니다.")
+    st.error("❌ secrets.toml 에 GEMINI_API_KEY를 설정해주세요.")
     st.stop()
 
-# Gemini 클라이언트 생성
+# 모델 생성
 try:
-    client = genai.Client(api_key=api_key)
+    model = genai.GenerativeModel("gemini-2.5-flash-lite")
 
 except Exception as e:
-    st.error(f"❌ Gemini 클라이언트 생성 실패: {str(e)}")
+    st.error(f"❌ 모델 생성 실패: {str(e)}")
     st.stop()
 
 # 시스템 프롬프트
@@ -33,11 +33,9 @@ SYSTEM_PROMPT = """
 
 규칙:
 - 사용자의 감정을 존중한다.
-- 비난하거나 공격적으로 말하지 않는다.
 - 현실적이고 균형 잡힌 조언을 제공한다.
-- 너무 단정짓지 않는다.
-- 연애 외 다른 주제도 자연스럽게 대화 가능하다.
-- 답변은 친근한 한국어로 작성한다.
+- 공격적이거나 단정짓지 않는다.
+- 친근한 한국어로 답변한다.
 """
 
 # 채팅 기록 저장
@@ -51,7 +49,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # 입력창
-user_input = st.chat_input("연애 고민을 이야기해보세요...")
+user_input = st.chat_input("고민을 이야기해보세요...")
 
 if user_input:
 
@@ -65,63 +63,25 @@ if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # AI 응답 생성
+    # AI 응답
     with st.chat_message("assistant"):
 
         message_placeholder = st.empty()
 
         try:
-            contents = []
+            # 대화 기록 구성
+            chat_history = SYSTEM_PROMPT + "\n\n"
 
-            # 시스템 프롬프트
-            contents.append(
-                types.Content(
-                    role="user",
-                    parts=[
-                        types.Part(text=SYSTEM_PROMPT)
-                    ]
-                )
-            )
-
-            contents.append(
-                types.Content(
-                    role="model",
-                    parts=[
-                        types.Part(
-                            text="알겠어. 따뜻하고 현실적인 상담을 제공할게."
-                        )
-                    ]
-                )
-            )
-
-            # 이전 대화 기록 추가
             for msg in st.session_state.messages:
-
-                role = "user" if msg["role"] == "user" else "model"
-
-                contents.append(
-                    types.Content(
-                        role=role,
-                        parts=[
-                            types.Part(text=msg["content"])
-                        ]
-                    )
-                )
+                role = "사용자" if msg["role"] == "user" else "상담사"
+                chat_history += f"{role}: {msg['content']}\n"
 
             # Gemini 응답 생성
-            response = client.models.generate_content(
-                model="gemini-2.5-flash-lite",
-                contents=contents,
-                config=types.GenerateContentConfig(
-                    temperature=0.8,
-                    max_output_tokens=1000,
-                )
-            )
+            response = model.generate_content(chat_history)
 
-            # 응답 텍스트
             assistant_reply = response.text
 
-            # 화면 출력
+            # 출력
             message_placeholder.markdown(assistant_reply)
 
             # 기록 저장
@@ -134,8 +94,7 @@ if user_input:
 
             error_message = (
                 "❌ 오류가 발생했습니다.\n\n"
-                f"에러 내용:\n{str(e)}\n\n"
-                "잠시 후 다시 시도해주세요."
+                f"에러 내용:\n{str(e)}"
             )
 
             message_placeholder.error(error_message)
